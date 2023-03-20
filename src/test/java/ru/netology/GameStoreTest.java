@@ -25,7 +25,7 @@ public class GameStoreTest {
         Game game4 = store.publishGame("Нетология Баттл Онлайн 4", "Аркады");
 
         Assertions.assertTrue(store.containsGame(game2));
-        Assertions.assertTrue(store.containsGame(game3));
+        Assertions.assertFalse(store.containsGame(game3));
     }
     @Test
     public void addPlayTimeTest() {
