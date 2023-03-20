@@ -15,7 +15,6 @@ public class GameStoreTest {
 
         assertTrue(store.containsGame(game));
     }
-    // другие ваши тесты
     @Test
     public void addTwoSimilarGames() {
         Game game1 = store.publishGame("Нетология Баттл Онлайн 1", "Симулятор");
