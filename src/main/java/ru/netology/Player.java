@@ -67,20 +67,32 @@ public class Player {
 
     /** Метод принимает жанр и возвращает игру этого жанра, в которую играли больше всего
      Если в игры этого жанра не играли, возвращается null */
-    public Game mostPlayerByGenre(String genre) {
-        if (playedTime.size() > 0){
-            Game desiredGame = null;
-            for (Game game : playedTime.keySet()) {
-                if (game.getGenre().equals(genre)) {
-                    if (desiredGame == null || playedTime.get(game) > playedTime.get(desiredGame)) {
-                        desiredGame = game;
-                    }
+    public Game[] mostPlayerByGenre(String genre) {
+        int mostTime = 0;
+        for (Game game : playedTime.keySet()) {
+            if (game.getGenre().equals(genre)) {
+                int playerTime = playedTime.get(game);
+                if (playerTime > mostTime) {
+                    mostTime = playerTime;
                 }
             }
-            if (playedTime.get(desiredGame) != 0) {
-                return desiredGame;
+        }
+        Game[] bestPlayed = new Game[0];
+        if (mostTime == 0) {
+            return null;
+        } else {
+            for (Game game : playedTime.keySet()) {
+                if (playedTime.get(game) == mostTime) {
+                    Game[] tmp = new Game[bestPlayed.length + 1];
+                    for (int i = 0 ; i < bestPlayed.length; i++) {
+                        tmp[i] = bestPlayed[i];
+                    }
+                    tmp[tmp.length - 1] = game;
+                    bestPlayed = tmp;
+                }
             }
         }
-        return null;
+        return bestPlayed;
     }
+
 }
