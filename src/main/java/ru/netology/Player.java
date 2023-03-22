@@ -14,21 +14,16 @@ public class Player {
     private Map<Game, Integer> playedTime = new HashMap<>();
 
     public Player(String name) {
-
         this.name = name;
     }
 
     public String getName() {
-
         return name;
     }
 
-    /**
-     * добавление игры игроку
-     * если игра уже была, никаких изменений происходить не должно
-     */
+    /** добавление игры игроку
+     если игра уже была, никаких изменений происходить не должно */
     public void installGame(Game game) {
-
         if (playedTime.containsKey(game))
         {
             return;
@@ -37,11 +32,12 @@ public class Player {
     }
 
     /** игрок играет в игру game на протяжении hours часов
-    об этом нужно сообщить объекту-каталогу игр, откуда была установлена игра
-    также надо обновить значения в мапе игрока, добавив проигранное количество часов
-    возвращает суммарное количество часов, проигранное в эту игру.
-    если игра не была установлена, то надо выкидывать RuntimeException */
+     об этом нужно сообщить объекту-каталогу игр, откуда была установлена игра
+     также надо обновить значения в мапе игрока, добавив проигранное количество часов
+     возвращает суммарное количество часов, проигранное в эту игру.
+     если игра не была установлена, то надо выкидывать RuntimeException */
     public int play(Game game, int hours) {
+
         if (playedTime.containsKey(game)) {
             playedTime.put(game, playedTime.get(game) + hours);
             game.getStore().addPlayTime(getName(), hours);
@@ -67,32 +63,20 @@ public class Player {
 
     /** Метод принимает жанр и возвращает игру этого жанра, в которую играли больше всего
      Если в игры этого жанра не играли, возвращается null */
-    public Game[] mostPlayerByGenre(String genre) {
-        int mostTime = 0;
-        for (Game game : playedTime.keySet()) {
-            if (game.getGenre().equals(genre)) {
-                int playerTime = playedTime.get(game);
-                if (playerTime > mostTime) {
-                    mostTime = playerTime;
-                }
-            }
-        }
-        Game[] bestPlayed = new Game[0];
-        if (mostTime == 0) {
-            return null;
-        } else {
+    public Game mostPlayerByGenre(String genre) {
+        if (playedTime.size() > 0){
+            Game desiredGame = null;
             for (Game game : playedTime.keySet()) {
-                if (playedTime.get(game) == mostTime) {
-                    Game[] tmp = new Game[bestPlayed.length + 1];
-                    for (int i = 0 ; i < bestPlayed.length; i++) {
-                        tmp[i] = bestPlayed[i];
+                if (game.getGenre().equals(genre)) {
+                    if (desiredGame == null || playedTime.get(game) > playedTime.get(desiredGame)) {
+                        desiredGame = game;
                     }
-                    tmp[tmp.length - 1] = game;
-                    bestPlayed = tmp;
                 }
             }
+            if (playedTime.get(desiredGame) != 0) {
+                return desiredGame;
+            }
         }
-        return bestPlayed;
+        return null;
     }
-
 }

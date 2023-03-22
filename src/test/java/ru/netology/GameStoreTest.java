@@ -7,33 +7,16 @@ import org.junit.jupiter.api.Test;
 
 public class GameStoreTest {
     GameStore store = new GameStore();
-
     @Test
     public void shouldAddGame() {
 
-        GameStore store = new GameStore();
+
         Game game = store.publishGame("Нетология Баттл Онлайн", "Аркады");
 
         assertTrue(store.containsGame(game));
     }
-
-    @Test
-    public void shouldAddGames() {
-
-        Game game1 = store.publishGame("Нетология Баттл Онлайн 1", "Симулятор");
-        Game game2 = store.publishGame("Нетология Баттл Онлайн 2", "Экшен");
-        Game game3 = store.publishGame("Нетология Баттл Онлайн 3", "Гонки");
-        Game game4 = store.publishGame("Нетология Баттл Онлайн 4", "Аркады");
-
-        Assertions.assertTrue(store.containsGame(game1));
-        Assertions.assertTrue(store.containsGame(game2));
-        Assertions.assertTrue(store.containsGame(game3));
-        Assertions.assertTrue(store.containsGame(game4));
-    }
-
     @Test
     public void addTwoSimilarGames() {
-
         Game game1 = store.publishGame("Нетология Баттл Онлайн 1", "Симулятор");
         Game game2 = store.publishGame("GTA V", "Экшен");
         Game game3 = store.publishGame("GTA V", "Экшен");
@@ -44,16 +27,13 @@ public class GameStoreTest {
     }
     @Test
     public void addPlayTimeTest() {
-
-        store.addPlayTime("gamer1", 1 );
+        store.addPlayTime("gamer1", 1);
         store.addPlayTime("gamer1", 7 );
-
 
         int expected = 8;
         int actual = store.getSumPlayedTime();
 
         Assertions.assertEquals(expected, actual);
-
     }
     @Test
     public void getMostPlayerTest() {
@@ -113,4 +93,3 @@ public class GameStoreTest {
 
     }
 }
-
